@@ -8,7 +8,7 @@ const StuttgartTrainGame = ({stations}:{stations:Station[]}) => {
     const [message, setMessage] = useState('Guess the Stuttgart train station name!');
     
     const [guessedStations, setGuessedStations] = useState<number[]>(()=>{
-        const guessedStations = localStorage.getItem('guessedStations');
+        const guessedStations = window?.localStorage?.getItem("guessedStation") ? localStorage.getItem('guessedStations') : null;
         if (guessedStations) {
             return JSON.parse(guessedStations);
         } else {
