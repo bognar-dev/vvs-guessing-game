@@ -2,22 +2,25 @@
 import React, { useState, useEffect } from 'react';
 import { Station } from '../(types)/station';
 import LineStatics from './line-statistics';
+import Image from 'next/image';
+import stadtbahn from '@/../public/stadtbahn.jpg';
 
 const StuttgartTrainGame = ({stations}:{stations:Station[]}) => {
     const [guess, setGuess] = useState('');
     const [message, setMessage] = useState('Guess the Stuttgart train station name!');
     
-    const [guessedStations, setGuessedStations] = useState<number[]>(()=>{
-        const guessedStations = localStorage.getItem('guessedStations');
-        if (guessedStations) {
-            return JSON.parse(guessedStations);
-        } else {
-            return [];
-        }
-    });
+    const [guessedStations, setGuessedStations] = useState<number[]>([]);
 
     useEffect(() => {
-        localStorage.setItem('guessedStations', JSON.stringify(guessedStations));
+            const guessedStations = localStorage.getItem('guessedStations');
+            if (guessedStations) {
+                setGuessedStations(JSON.parse(guessedStations));
+            }
+        
+    },[stations]);
+
+    useEffect(() => {
+        if (guessedStations.length > 0) localStorage.setItem('guessedStations', JSON.stringify(guessedStations));
     }, [guessedStations]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,11 +57,10 @@ const StuttgartTrainGame = ({stations}:{stations:Station[]}) => {
             }
         });
         return lines;
-    }, []);
-    console.log(allLines)
+    }, []).sort();
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <LineStatics stations={stations} guessedStations={guessedStations}  />
+            <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines}  />
             <h1 className="text-4xl mb-4">{message}</h1>
             {guessedStations.length !== stations.length ? (
                 <>
@@ -69,8 +71,6 @@ const StuttgartTrainGame = ({stations}:{stations:Station[]}) => {
                 <p>Congratulations! You guessed all the stations!</p>
             )}
             <button onClick={startNewGame} className="px-4 py-2 bg-green-500 text-white rounded-md">New Game</button>
-
-            <p>All lines: {allLines.join(', ')}</p>
         </div>
     );
 };
