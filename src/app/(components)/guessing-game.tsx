@@ -2,14 +2,19 @@
 import React, { useState, useEffect } from 'react';
 import { Station } from '../(types)/station';
 import LineStatics from './line-statistics';
+import LastGuessedStations from './last-guessed-stations';
 import Image from 'next/image';
 import stadtbahn from '@/../public/stadtbahn.jpg';
-
-const StuttgartTrainGame = ({stations}:{stations:Station[]}) => {
+import MapBoxMap from './map';
+import { FeatureCollection } from 'geojson';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
+    const { toast } = useToast()
     const [guess, setGuess] = useState('');
     const [message, setMessage] = useState('Guess the Stuttgart train station name!');
-    
-    const [guessedStations, setGuessedStations] = useState<number[]>(()=>{
+
+    const [guessedStations, setGuessedStations] = useState<number[]>(() => {
         const guessedStations = localStorage.getItem('guessedStations');
         if (guessedStations) {
             return JSON.parse(guessedStations);
@@ -34,6 +39,10 @@ const StuttgartTrainGame = ({stations}:{stations:Station[]}) => {
             } else {
                 setGuessedStations([...guessedStations, stations[guessIndex].station_id]);
                 setMessage('Correct!');
+                toast({
+                    title: "Hurra!",
+                    description: `Du hast die Station ${stations[guessIndex].station_id} erraten!`,
+                })
             }
         } else {
             setMessage('Incorrect!');
@@ -57,20 +66,57 @@ const StuttgartTrainGame = ({stations}:{stations:Station[]}) => {
         });
         return lines;
     }, []).sort();
+    const stationsGeoJson: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: stations
+            .filter((station) => !guessedStations.includes(station.station_id))
+            .map((station) => ({
+                type: 'Feature',
+                geometry: { type: 'Point', coordinates: [station.x_coordinate, station.y_coordinate] },
+                properties: {},
+            })),
+
+    };
+
+    const guessedStationsGeo: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: guessedStations.map((stationId) => {
+            const station = stations.find((s) => s.station_id === stationId);
+
+            return {
+                type: 'Feature',
+                geometry: { type: 'Point', coordinates: [station?.x_coordinate || 0, station?.y_coordinate || 0] },
+                properties: {},
+            };
+        }),
+    };
+    console.log("All stations: " + stationsGeoJson.features.length, "Guessed stations: " + guessedStationsGeo.features.length)
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
-            <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines}  />
-            <h1 className="text-4xl mb-4">{message}</h1>
-            {guessedStations.length !== stations.length ? (
-                <>
-                    <input type="text" value={guess} onChange={handleInputChange} className="px-4 py-2 border border-gray-300 rounded-md mb-4" />
-                    <button onClick={handleGuess} className="px-4 py-2 bg-blue-500 text-white rounded-md mb-2">Submit Guess</button>
-                </>
-            ) : (
-                <p>Congratulations! You guessed all the stations!</p>
-            )}
-            <button onClick={startNewGame} className="px-4 py-2 bg-green-500 text-white rounded-md">New Game</button>
-        </div>
+        <>
+            <div className="flex flex-col items-center justify-center h-screen">
+                <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
+                <LastGuessedStations stations={stations} guessedStations={guessedStations} />
+                <h1 className="text-4xl mb-4">{message}</h1>
+                {guessedStations.length !== stations.length ? (
+                    <>
+                        <input type="text" value={guess} onChange={handleInputChange} className="px-4 py-2 border border-gray-300 rounded-md mb-4" />
+
+                        <button onClick={handleGuess} className="px-4 py-2 bg-blue-500 text-white rounded-md mb-2">Submit Guess</button>
+                        <Button
+                            onClick={handleGuess}
+                        >
+                            Show Toast
+                        </Button>
+                    </>
+                ) : (
+                    <p>Congratulations! You guessed all the stations!</p>
+                )}
+
+            </div>
+            <div>
+                <MapBoxMap stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} />
+            </div>
+        </>
     );
 };
 
