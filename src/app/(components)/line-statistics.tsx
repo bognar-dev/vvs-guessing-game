@@ -34,7 +34,7 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
             <h3>Guessed Percentage by Line:</h3>
             <ul className='flex flex-wrap gap-2'>
                 {lines.map((line:string) => (
-                    <li className={`border text-white font-bold text-lg rounded-lg p-3 ${colorVariants[line]}`} key={line}>
+                    <li className={`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} key={line}>
                         {line}: {calculateGuessedPercentageByLine(line).toFixed(2)}%
                     </li>
                 ))}

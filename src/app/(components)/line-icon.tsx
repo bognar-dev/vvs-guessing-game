@@ -7,7 +7,7 @@ interface LineIconProps {
 
 const LineIcon: React.FC<LineIconProps> = ({ line, key }) => {
   return (
-    <span key={key} className={`bg-${line} text-white rounded-full px-2 py-1 m-1`}>{line}</span>
+    <span key={key} className={`bg-${line} text-white rounded-full px-1 py-0.5 m-1`}>{line}</span>
   );
 };
 

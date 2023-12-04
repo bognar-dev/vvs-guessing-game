@@ -9,6 +9,7 @@ import MapBoxMap from './map';
 import { FeatureCollection } from 'geojson';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import GuessBox from './guess-box';
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
     const { toast } = useToast()
     const [guess, setGuess] = useState('');
@@ -27,8 +28,8 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
         if (guessedStations.length > 0) localStorage.setItem('guessedStations', JSON.stringify(guessedStations));
     }, [guessedStations]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setGuess(e.target.value);
+    const handleInputChange = (guess: string) => {
+        setGuess(guess);
     };
 
     const handleGuess = () => {
@@ -41,7 +42,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 setMessage('Correct!');
                 toast({
                     title: "Hurra!",
-                    description: `Du hast die Station ${stations[guessIndex].station_id} erraten!`,
+                    description: `Du hast die Station ${stations[guessIndex].name} erraten!`,
                 })
             }
         } else {
@@ -93,29 +94,18 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
     console.log("All stations: " + stationsGeoJson.features.length, "Guessed stations: " + guessedStationsGeo.features.length)
     return (
         <>
-            <div className="flex flex-col items-center justify-center h-screen">
-                <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
-                <LastGuessedStations stations={stations} guessedStations={guessedStations} />
-                <h1 className="text-4xl mb-4">{message}</h1>
-                {guessedStations.length !== stations.length ? (
-                    <>
-                        <input type="text" value={guess} onChange={handleInputChange} className="px-4 py-2 border border-gray-300 rounded-md mb-4" />
-
-                        <button onClick={handleGuess} className="px-4 py-2 bg-blue-500 text-white rounded-md mb-2">Submit Guess</button>
-                        <Button
-                            onClick={handleGuess}
-                        >
-                            Show Toast
-                        </Button>
-                    </>
-                ) : (
-                    <p>Congratulations! You guessed all the stations!</p>
-                )}
-
+            <div className="grid grid-cols-4 h-screen  overflow-hidden">
+                <div className='col-span-3'>
+                    <GuessBox message={message} guessedStations={guessedStations} stations={stations} guess={guess} handleInputChange={handleInputChange} handleGuess={handleGuess} />
+                    <MapBoxMap className='h-full ' stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} />
+                </div>
+                <div className='col-span-1 bg-white p-5 overflow-y-scroll'>
+                    <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
+                    <LastGuessedStations className='overflow-y-scroll' stations={stations} guessedStations={guessedStations} />
+                </div>
             </div>
-            <div>
-                <MapBoxMap stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} />
-            </div>
+            
+
         </>
     );
 };

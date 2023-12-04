@@ -6,9 +6,10 @@ import LineIcon from './line-icon';
 interface LastGuessedStationsProps {
     stations: Station[];
     guessedStations: number[];
+    className?: string;
 }
 
-const LastGuessedStations: React.FC<LastGuessedStationsProps> = ({ stations, guessedStations }) => {
+const LastGuessedStations: React.FC<LastGuessedStationsProps> = ({ stations, guessedStations, className }) => {
     const getLastGuessedStations = () => {
         const lastGuessedStations = guessedStations.slice();
         return lastGuessedStations.map(stationId => {
@@ -17,7 +18,7 @@ const LastGuessedStations: React.FC<LastGuessedStationsProps> = ({ stations, gue
         });
     };
     return (
-            <Table>
+            <Table className={className}>
                 <TableCaption>Last guessed stations</TableCaption>
                 <TableHeader>
                     <TableRow>
@@ -29,7 +30,7 @@ const LastGuessedStations: React.FC<LastGuessedStationsProps> = ({ stations, gue
                     {getLastGuessedStations().map((station) => (
                         <TableRow>
                             <TableCell className="font-medium">{station.name}</TableCell>
-                            <TableCell>{station.lines.split(",").map((line, key) => (
+                            <TableCell className='flex flex-wrap'>{station.lines.split(",").map((line, key) => (
                                 <LineIcon line={line} key={key} />
                             ))
                             }</TableCell>

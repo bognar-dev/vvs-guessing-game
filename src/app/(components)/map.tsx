@@ -6,7 +6,7 @@ import Map, { CircleLayer, Layer, Source } from 'react-map-gl';
 import { FeatureCollection } from 'geojson';
 import { mapConfig } from '../(data)/mapconfig';
 
-const MapBoxMap = ({ stationsGeo, guessedStationsGeo }: { stationsGeo: FeatureCollection, guessedStationsGeo: FeatureCollection }) => {
+const MapBoxMap = ({ stationsGeo, guessedStationsGeo,className }: { stationsGeo: FeatureCollection, guessedStationsGeo: FeatureCollection, className?:string }) => {
 
   const [viewState, setViewState] = React.useState({
     longitude: 9.181126114,
@@ -15,12 +15,13 @@ const MapBoxMap = ({ stationsGeo, guessedStationsGeo }: { stationsGeo: FeatureCo
   });
 
   return (
+    <div className={className}>
     <Map
       mapboxAccessToken={mapConfig.accessKey}
 
       {...viewState}
       onMove={evt => setViewState(evt.viewState)}
-      style={{ width: 600, height: 400 }}
+      style={{ width: "100%", height: "100%" }}
       mapStyle={mapConfig.style}
     >
       <Source id="stations" type="geojson" data={stationsGeo}>
@@ -30,6 +31,7 @@ const MapBoxMap = ({ stationsGeo, guessedStationsGeo }: { stationsGeo: FeatureCo
         <Layer {...mapConfig.guessedStationLayerStyle} />
       </Source>
     </Map>
+    </div>
   );
 }
 
