@@ -27,7 +27,7 @@ const LastGuessedStations: React.FC<LastGuessedStationsProps> = ({ stations, gue
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {getLastGuessedStations().map((station) => (
+                    {getLastGuessedStations().reverse().map((station) => (
                         <TableRow>
                             <TableCell className="font-medium">{station.name}</TableCell>
                             <TableCell className='flex flex-wrap'>{station.lines.split(",").map((line, key) => (

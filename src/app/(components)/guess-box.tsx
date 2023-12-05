@@ -98,7 +98,7 @@ const GuessBox: React.FC<GuessBoxProps> = ({ message, guessedStations, stations,
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input placeholder="Station (Enter to guess)" {...field} />
+                                    <Input autoComplete="off" placeholder="Station (Enter to guess)" {...field} />
                                 </FormControl>
                                 
                             </FormItem>

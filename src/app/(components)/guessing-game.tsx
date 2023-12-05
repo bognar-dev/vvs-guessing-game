@@ -15,15 +15,16 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
     const [guess, setGuess] = useState('');
     const [message, setMessage] = useState('Guess the Stuttgart train station name!');
 
-    const [guessedStations, setGuessedStations] = useState<number[]>(() => {
-        const guessedStations = localStorage.getItem('guessedStations');
-        if (guessedStations) {
-            return JSON.parse(guessedStations);
-        } else {
-            return [];
-        }
-    });
+    const [guessedStations, setGuessedStations] = useState<number[]>([]);
 
+    useEffect(() => {
+        
+            const guessedStations = localStorage.getItem('guessedStations');
+            if (guessedStations) {
+               setGuessedStations(JSON.parse(guessedStations));
+            } 
+        
+    },[])
     useEffect(() => {
         if (guessedStations.length > 0) localStorage.setItem('guessedStations', JSON.stringify(guessedStations));
     }, [guessedStations]);
