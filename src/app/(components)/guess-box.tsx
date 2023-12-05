@@ -17,15 +17,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Station } from "../(types)/station";
 import { toast } from "@/components/ui/use-toast"
+import { useState } from "react"
 
 
 interface GuessBoxProps {
-    message: string;
-    guessedStations: number[];
-    stations: Station[];
-    guess: string;
-    handleInputChange: (input: string) => void;
-    handleGuess: () => void;
+ 
+    handleGuess: (guess:string) => void;
 }
 
 
@@ -70,7 +67,7 @@ export function ProfileForm() {
 }
 
 
-const GuessBox: React.FC<GuessBoxProps> = ({ message, guessedStations, stations, guess, handleInputChange, handleGuess }) => {
+const GuessBox: React.FC<GuessBoxProps> = ({ handleGuess }) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -78,18 +75,15 @@ const GuessBox: React.FC<GuessBoxProps> = ({ message, guessedStations, stations,
         },
     })
 
-    // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
-        handleGuess()
-        handleInputChange(values.guess)
-        console.log(values)
+        handleGuess(values.guess)
     }
 
     return (
     
 
             <Form {...form}  >
-                <form onSubmit={form.handleSubmit(onSubmit)}  className="z-10 left-1/3 top-1/4 absolute rounded-full bg-white ">
+                <form onSubmit={form.handleSubmit(onSubmit)}  className="z-10 left-1/4 top-1/4 md:left-1/3 md:top-1/4 absolute rounded-full bg-white ">
                     <FormField
                     
                         control={form.control}
@@ -98,7 +92,7 @@ const GuessBox: React.FC<GuessBoxProps> = ({ message, guessedStations, stations,
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input autoComplete="off" placeholder="Station (Enter to guess)" {...field} />
+                                    <Input  autoComplete="off" placeholder="Station (Enter to guess)" {...field} />
                                 </FormControl>
                                 
                             </FormItem>

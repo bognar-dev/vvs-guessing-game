@@ -29,11 +29,11 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
 
 
     return (
-        <div>
+        <div className='flex justify-items-center justify-center flex-col'>
             <h2>Overall Percentage of Guessed Stations: {overallPercentage.toFixed(2)}%</h2>
             <AnimatedCounter value={guessedStations.length} />
             <h3>Guessed Percentage by Line:</h3>
-            <ul className='flex flex-wrap gap-2'>
+            <ul className='flex flex-wrap justify-items-center justify-center gap-2'>
                 {lines.map((line: string) => (
                     
                     <Gauge

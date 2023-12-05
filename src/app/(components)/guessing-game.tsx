@@ -29,15 +29,16 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
         if (guessedStations.length > 0) localStorage.setItem('guessedStations', JSON.stringify(guessedStations));
     }, [guessedStations]);
 
-    const handleInputChange = (guess: string) => {
-        setGuess(guess);
-    };
+   
 
-    const handleGuess = () => {
+    const handleGuess = (guess:string) => {
         const guessIndex = stations.findIndex((station) => station.name.toLowerCase() === guess.toLowerCase());
         if (guessIndex > -1) {
             if (guessedStations.includes(stations[guessIndex].station_id)) {
-                setMessage('You already guessed that station!');
+                toast({
+                    title: "Mist!",
+                    description: `Du hast die Station ${stations[guessIndex].name} bereits erraten!`,
+                })
             } else {
                 setGuessedStations([...guessedStations, stations[guessIndex].station_id]);
                 setMessage('Correct!');
@@ -47,7 +48,10 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 })
             }
         } else {
-            setMessage('Incorrect!');
+            toast({
+                title: "Mist!",
+                description: `Die Station ${guess} gibt es nicht!`,
+            })
         }
     };
 
@@ -97,7 +101,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
         <>
             <div className="grid grid-cols-4 h-screen  overflow-hidden">
                 <div className='col-span-3'>
-                    <GuessBox message={message} guessedStations={guessedStations} stations={stations} guess={guess} handleInputChange={handleInputChange} handleGuess={handleGuess} />
+                    <GuessBox handleGuess={handleGuess} />
                     <MapBoxMap className='h-full ' stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} />
                 </div>
                 <div className='col-span-1 bg-white p-5 overflow-y-scroll'>
