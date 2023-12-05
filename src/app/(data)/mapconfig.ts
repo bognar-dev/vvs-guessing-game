@@ -8,7 +8,7 @@ export const mapConfig = {
         id: 'StationPoint',
         type: 'circle',
         paint: {
-            'circle-radius': 3,
+            'circle-radius': 4,
             'circle-color': '#000000'
             
         }
@@ -17,7 +17,7 @@ export const mapConfig = {
         id: 'guessedStationPoint',
         type: 'circle',
         paint: {
-            'circle-radius': 3,
+            'circle-radius': 4,
             'circle-color': '#ff0000'
         }
     } as CircleLayer,

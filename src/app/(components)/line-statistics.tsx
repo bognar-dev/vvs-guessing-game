@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { Station } from '../(types)/station';
-import {colorVariants}  from '@/app/(data)/colorconfig';
+import { colorVariants, colorVariantsText } from '@/app/(data)/colorconfig';
 import AnimatedCounter from '@/components/ui/animated-counter';
+import { Gauge } from '@/components/ui/gauge';
 
 interface LineStatisticsProps {
     stations: Station[];
@@ -24,8 +25,8 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
         return (guessedStationsForLine / totalStations) * 100;
     };
 
-    
-    
+
+
 
     return (
         <div>
@@ -33,13 +34,22 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
             <AnimatedCounter value={guessedStations.length} />
             <h3>Guessed Percentage by Line:</h3>
             <ul className='flex flex-wrap gap-2'>
-                {lines.map((line:string) => (
-                    <li className={`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} key={line}>
-                        {line}: {calculateGuessedPercentageByLine(line).toFixed(2)}%
-                    </li>
+                {lines.map((line: string) => (
+                    
+                    <Gauge
+                        /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
+                        key={line}
+                        value={parseFloat(calculateGuessedPercentageByLine(line).toFixed(2))}
+                        size={'small'}
+                        showValue={true}
+                        colour={colorVariantsText[line]}
+                        label={line}
+                    />
+
+
                 ))}
             </ul>
-            
+
         </div>
     );
 };
