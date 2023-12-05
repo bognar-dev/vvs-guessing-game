@@ -29,13 +29,22 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
 
 
     return (
-        <div className='flex justify-items-center justify-center flex-col'>
+        <div className='flex justify-items-start justify-start flex-col gap-4'>
             <h2>Overall Percentage of Guessed Stations: {overallPercentage.toFixed(2)}%</h2>
-            <AnimatedCounter value={guessedStations.length} />
+            <div className='flex gap-2 justify-center justify-items-center'>
+                <div className='grid grid-flow-row grid-rows-1 justify-items-center justify-center'>
+                    <h2>Guessed:</h2>
+                    <AnimatedCounter value={guessedStations.length} />
+                </div>
+                <div className='grid grid-flow-row grid-rows-1 justify-items-center justify-center'>
+                    <h2>To go:</h2>
+                    <AnimatedCounter value={stations.length - guessedStations.length} />
+                </div>
+            </div>
             <h3>Guessed Percentage by Line:</h3>
             <ul className='flex flex-wrap justify-items-center justify-center gap-2'>
                 {lines.map((line: string) => (
-                    
+
                     <Gauge
                         /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
                         key={line}

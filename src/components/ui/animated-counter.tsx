@@ -9,7 +9,7 @@ export default function AnimatedCounter({ value }: { value: number }) {
   return (
     <div
       style={{ fontSize }}
-      className="flex space-x-3 overflow-hidden rounded bg-white px-2 leading-none text-gray-900"
+      className="flex space-x-3 overflow-hidden rounded w-min bg-slate-200 px-2 leading-none text-gray-900"
     >
       <Digit place={100} value={value} />
       <Digit place={10} value={value} />
@@ -27,7 +27,7 @@ function Digit({ place, value }: { place: number; value: number }) {
   }, [animatedValue, valueRoundedToPlace]);
 
   return (
-    <div style={{ height }} className="relative w-[1ch] tabular-nums">
+    <div style={{ height }} className="relative w-[1ch] tabular-nums ">
       {[...Array(10).keys()].map((i) => (
         <Number key={i} mv={animatedValue} number={i} />
       ))}

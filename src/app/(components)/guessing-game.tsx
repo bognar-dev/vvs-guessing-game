@@ -10,7 +10,15 @@ import { FeatureCollection } from 'geojson';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import GuessBox from './guess-box';
+import Fuse from 'fuse.js';
+const options = {
+    includeScore: true,
+    threshold: 0.3, // Lower the threshold, more strict is the match
+    keys: ['name']
+  };
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
+    
+      //const fuse = new Fuse(stations, options);
     const { toast } = useToast()
     const [guess, setGuess] = useState('');
     const [message, setMessage] = useState('Guess the Stuttgart train station name!');
@@ -32,6 +40,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
    
 
     const handleGuess = (guess:string) => {
+          //const result = fuse.search(guess);
         const guessIndex = stations.findIndex((station) => station.name.toLowerCase() === guess.toLowerCase());
         if (guessIndex > -1) {
             if (guessedStations.includes(stations[guessIndex].station_id)) {
