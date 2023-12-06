@@ -12,12 +12,12 @@ import GuessBox from './guess-box';
 
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
 
-
-
     const { toast } = useToast()
-    const [guess, setGuess] = useState('');
-    const [message, setMessage] = useState('Guess the Stuttgart train station name!');
-
+    const [viewState, setViewState] = React.useState({
+        longitude: 9.181126114,
+        latitude: 48.78316027,
+        zoom: 12
+      });
     const [guessedStations, setGuessedStations] = useState<number[]>([]);
 
     useEffect(() => {
@@ -37,7 +37,6 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
     const handleGuess = (guess: string) => {
         const regex = new RegExp('^' + guess.split('').join('.?') + '.?$','i');
         const found = stations.find((station) => regex.test(station.name));
-        console.log(found)
         const guessIndex = stations.findIndex((station) => regex.test(station.name));
         if (guessIndex > -1) {
             if (guessedStations.includes(stations[guessIndex].station_id)) {
@@ -45,25 +44,30 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                     title: "Mist!",
                     description: `Du hast die Station ${stations[guessIndex].name} bereits erraten!`,
                 })
+                return false;
             } else {
                 setGuessedStations([...guessedStations, stations[guessIndex].station_id]);
-                setMessage('Correct!');
                 toast({
                     title: "Hurra!",
                     description: `Du hast die Station ${stations[guessIndex].name} erraten!`,
                 })
+                setViewState({
+                    longitude: stations[guessIndex].x_coordinate,
+                    latitude: stations[guessIndex].y_coordinate,
+                    zoom: 14
+                })
+                return true;
             }
         } else {
             toast({
                 title: "Mist!",
                 description: `Die Station ${guess} gibt es nicht!`,
             })
+            return false;
         }
     };
 
     const startNewGame = () => {
-        setGuess('');
-        setMessage('Guess the Stuttgart train station name!');
         setGuessedStations([]);
         localStorage.removeItem('guessedStations');
         console.log('new game')
@@ -81,7 +85,6 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
     const stationsGeoJson: FeatureCollection = {
         type: 'FeatureCollection',
         features: stations
-            .filter((station) => !guessedStations.includes(station.station_id))
             .map((station) => ({
                 type: 'Feature',
                 geometry: { type: 'Point', coordinates: [station.x_coordinate, station.y_coordinate] },
@@ -102,13 +105,12 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
             };
         }),
     };
-    console.log("All stations: " + stationsGeoJson.features.length, "Guessed stations: " + guessedStationsGeo.features.length)
     return (
         <>
             <div className="grid grid-cols-4 h-screen  overflow-hidden">
                 <div className='col-span-3'>
                     <GuessBox handleGuess={handleGuess} />
-                    <MapBoxMap className='h-full ' stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} />
+                    <MapBoxMap className='h-full ' stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} viewState={viewState} setViewState={setViewState}  />
                 </div>
                 <div className='col-span-1 bg-white p-5 overflow-y-scroll'>
                     <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
