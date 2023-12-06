@@ -3,22 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { Station } from '../(types)/station';
 import LineStatics from './line-statistics';
 import LastGuessedStations from './last-guessed-stations';
-import Image from 'next/image';
-import stadtbahn from '@/../public/stadtbahn.jpg';
 import MapBoxMap from './map';
 import { FeatureCollection } from 'geojson';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import GuessBox from './guess-box';
-import Fuse from 'fuse.js';
-const options = {
-    includeScore: true,
-    threshold: 0.3, // Lower the threshold, more strict is the match
-    keys: ['name']
-  };
+
+
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
-    
-      //const fuse = new Fuse(stations, options);
+
+
+
     const { toast } = useToast()
     const [guess, setGuess] = useState('');
     const [message, setMessage] = useState('Guess the Stuttgart train station name!');
@@ -26,22 +21,24 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
     const [guessedStations, setGuessedStations] = useState<number[]>([]);
 
     useEffect(() => {
-        
-            const guessedStations = localStorage.getItem('guessedStations');
-            if (guessedStations) {
-               setGuessedStations(JSON.parse(guessedStations));
-            } 
-        
-    },[])
+
+        const guessedStations = localStorage.getItem('guessedStations');
+        if (guessedStations) {
+            setGuessedStations(JSON.parse(guessedStations));
+        }
+
+    }, [])
     useEffect(() => {
         if (guessedStations.length > 0) localStorage.setItem('guessedStations', JSON.stringify(guessedStations));
     }, [guessedStations]);
 
-   
 
-    const handleGuess = (guess:string) => {
-          //const result = fuse.search(guess);
-        const guessIndex = stations.findIndex((station) => station.name.toLowerCase() === guess.toLowerCase());
+
+    const handleGuess = (guess: string) => {
+        const regex = new RegExp('^' + guess.split('').join('.?') + '.?$','i');
+        const found = stations.find((station) => regex.test(station.name));
+        console.log(found)
+        const guessIndex = stations.findIndex((station) => regex.test(station.name));
         if (guessIndex > -1) {
             if (guessedStations.includes(stations[guessIndex].station_id)) {
                 toast({
@@ -118,7 +115,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                     <LastGuessedStations className='overflow-y-scroll' stations={stations} guessedStations={guessedStations} />
                 </div>
             </div>
-            
+
 
         </>
     );
