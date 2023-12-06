@@ -35,9 +35,11 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
 
 
     const handleGuess = (guess: string) => {
-        const regex = new RegExp('^' + guess.split('').join('.?') + '.?$','i');
-        const found = stations.find((station) => regex.test(station.name));
-        const guessIndex = stations.findIndex((station) => regex.test(station.name));
+        guess.replace(/[^\w\s]/gi, '')
+        const regex = new RegExp('^' + guess.toLowerCase().replace(/[^\w\s]/gi, '').split('').join('.?') + '.?$','i');
+        console.log(guess.toLowerCase().replace(/[^\w\s]/gi, '').split('').join('.?') + '.?$','i')
+        const found = stations.find((station) => regex.test(station.name.toLowerCase()));
+        const guessIndex = stations.findIndex((station) => regex.test(station.name.toLowerCase()));
         if (guessIndex > -1) {
             if (guessedStations.includes(stations[guessIndex].station_id)) {
                 toast({
