@@ -57,3 +57,32 @@ export const colorVariantsText: { [key: string]: string } = {
     S60: 'text-S60',
     S62: 'text-S62',
 }
+
+const colorVariantsHex: { [key: string]: string } = {
+    U1: "#CD9C72",
+    U2: "#F58220",
+    U3: "#946241",
+    U4: "#7A67AE",
+    U5: "#00BAF1",
+    U6: "#ED028C",
+    U7: "#0AB38D",
+    U8: "#BFB678",
+    U9: "#FED304",
+    U11: "#939598",
+    U12: "#85BBE5",
+    U13: "#F59EB2",
+    U14: "#69BD51",
+    U15: "#015AAA",
+    U16: "#C4BF2F",
+    U19: "#FCB814",
+    U29: "#FED304",
+    S1: "#59AF41",
+    S2: "#59AF41",
+    S3: "#F58220",
+    S4: "#0166B3",
+    S5: "#00ACDD",
+    S6: "#844C00",
+    S60: "#8A8D06",
+    S62: "#C3792E",
+  
+}

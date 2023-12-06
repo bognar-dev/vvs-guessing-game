@@ -8,17 +8,20 @@ export const mapConfig = {
         id: 'StationPoint',
         type: 'circle',
         paint: {
-            'circle-radius': 4,
-            'circle-color': '#000000'
-            
+            'circle-radius': 3,
+            'circle-color': '#ffffff',
+            'circle-stroke-color': '#878787',
+            'circle-stroke-width': 2
         }
     } as CircleLayer,
     guessedStationLayerStyle: {
         id: 'guessedStationPoint',
         type: 'circle',
         paint: {
-            'circle-radius': 4,
-            'circle-color': '#ff0000'
+            'circle-radius': 3,
+            'circle-color': '#000000',
+            'circle-stroke-color': '#d3d3d3',
+            'circle-stroke-width': 2
         }
     } as CircleLayer,
     
