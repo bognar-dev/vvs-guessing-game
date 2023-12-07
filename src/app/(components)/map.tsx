@@ -29,7 +29,6 @@ const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className,viewState,setVie
     <div className={className}>
       <Map
         mapboxAccessToken={mapConfig.accessKey}
-
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
         style={{ width: "100%", height: "100%" }}

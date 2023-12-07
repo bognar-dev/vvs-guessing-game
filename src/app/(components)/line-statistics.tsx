@@ -30,14 +30,15 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
 
     return (
         <div className='flex justify-items-start justify-start flex-col gap-4'>
-            <h2>Overall Percentage of Guessed Stations: {overallPercentage.toFixed(2)}%</h2>
+            <h2 className='text-md'><span className='font-semibold text-xl'>{overallPercentage.toFixed(2)}%</span> Stations found</h2>
+            
             <div className='flex gap-2 justify-center justify-items-center'>
                 <div className='grid grid-flow-row grid-rows-1 justify-items-center justify-center'>
-                    <h2>Guessed:</h2>
+                    <h2 className='font-semibold'>Guessed:</h2>
                     <AnimatedCounter value={guessedStations.length} />
                 </div>
                 <div className='grid grid-flow-row grid-rows-1 justify-items-center justify-center'>
-                    <h2>To go:</h2>
+                    <h2 className='font-semibold'>To go:</h2>
                     <AnimatedCounter value={stations.length - guessedStations.length} />
                 </div>
             </div>

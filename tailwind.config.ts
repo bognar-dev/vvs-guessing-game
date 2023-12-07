@@ -34,6 +34,7 @@ const config: Config = {
         U19: 'var(--U19)',
         U29: 'var(--U29)',
         S1: 'var(--S1)',
+        S11: 'var(--S11)',
         S2: 'var(--S2)',
         S3: 'var(--S3)',
         S4: 'var(--S4)',

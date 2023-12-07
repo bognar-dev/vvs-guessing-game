@@ -8,10 +8,13 @@ import { FeatureCollection } from 'geojson';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import GuessBox from './guess-box';
+import { useMap } from 'react-map-gl';
+import { m } from 'framer-motion';
+import { set } from 'react-hook-form';
 
 
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
-
+    const {myMapB} = useMap();
     const { toast } = useToast()
     const [viewState, setViewState] = React.useState({
         longitude: 9.181126114,
@@ -52,11 +55,13 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                     title: "Hurra!",
                     description: `Du hast die Station ${stations[guessIndex].name} erraten!`,
                 })
+
                 setViewState({
                     longitude: stations[guessIndex].x_coordinate,
                     latitude: stations[guessIndex].y_coordinate,
-                    zoom: 14
-                })
+                    zoom: 12
+                  });
+
                 return true;
             }
         } else {
