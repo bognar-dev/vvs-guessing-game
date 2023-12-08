@@ -63,7 +63,7 @@ const GuessBox: React.FC<GuessBoxProps> = ({ handleGuess }) => {
                 
                 e.preventDefault()
             }}
-                className="z-10 left-1/2  top-1/2 lg:top-1/4 transform -translate-x-1/2 md:-translate-y-1/2  lg:-translate-x-72 absolute rounded-full bg-white ">
+                className="z-10 left-1/2 top-3/4 lg:top-1/4 transform -translate-x-1/2 md:-translate-y-1/2  lg:-translate-x-72 absolute rounded-full bg-white ">
                 <FormField
 
                     control={form.control}
