@@ -22,9 +22,10 @@ export const mapConfig = {
             'circle-color': '#000000',
             'circle-stroke-color': '#ffffff',
             'circle-stroke-width': 2
+            
         }
     } as CircleLayer,
-    
+   
 
     
     

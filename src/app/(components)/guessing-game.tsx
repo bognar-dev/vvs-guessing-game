@@ -14,7 +14,6 @@ import { set } from 'react-hook-form';
 
 
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
-    const {myMapB} = useMap();
     const { toast } = useToast()
     const [viewState, setViewState] = React.useState({
         longitude: 9.181126114,
@@ -59,7 +58,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 setViewState({
                     longitude: stations[guessIndex].x_coordinate,
                     latitude: stations[guessIndex].y_coordinate,
-                    zoom: 12
+                    zoom: 15
                   });
 
                 return true;
@@ -94,7 +93,8 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
             .map((station) => ({
                 type: 'Feature',
                 geometry: { type: 'Point', coordinates: [station.x_coordinate, station.y_coordinate] },
-                properties: {},
+                properties: {
+                    }
             })),
 
     };
@@ -106,8 +106,10 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
 
             return {
                 type: 'Feature',
-                geometry: { type: 'Point', coordinates: [station?.x_coordinate || 0, station?.y_coordinate || 0] },
-                properties: {},
+                geometry: { type: 'Point', coordinates: [station?.x_coordinate || 0, station?.y_coordinate || 0]},
+                properties: {
+                    description: station?.name,
+                    }
             };
         }),
     };
