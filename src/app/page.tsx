@@ -16,7 +16,7 @@ const stations: Station[] = rows as Station[];
 
 
   return (
-    <main className="flex flex-col items-center justify-between">
+    <main className="">
         
       <GuessingGame stations={stations}/>
       
