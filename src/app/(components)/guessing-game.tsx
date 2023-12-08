@@ -118,7 +118,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                     <GuessBox handleGuess={handleGuess} />
                     <MapBoxMap className='h-full ' stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} viewState={viewState} setViewState={setViewState}  />
                 </div>
-                <div className='lg:hidden z-10 px-5 py-2 mx-5 top-4  absolute rounded-full bg-white '>
+                <div className='lg:hidden z-10 px-5 py-2 mx-5 top-4  absolute rounded-md bg-white '>
                     <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
                 </div>
                 <div className='hidden lg:block col-span-1 bg-white p-5 overflow-y-scroll'>

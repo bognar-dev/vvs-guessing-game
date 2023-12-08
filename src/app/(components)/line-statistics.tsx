@@ -29,8 +29,8 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
 
 
     return (
-        <div className='flex justify-items-start justify-start flex-col gap-4'>
-            <h2 className='hidden lg:block text-md'><span className='  font-semibold text-xl'>{overallPercentage.toFixed(2)}%</span> Stations found</h2>
+        <div className='flex justify-items-start justify-start flex-col gap-4 '>
+            <h2 className=' text-md'><span className='  font-semibold text-xl'>{overallPercentage.toFixed(2)}%</span> Stations found</h2>
             
             <div className='hidden lg:flex gap-2 justify-center justify-items-center'>
                 <div className='grid grid-flow-row grid-rows-1 justify-items-center justify-center'>
