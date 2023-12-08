@@ -6,7 +6,6 @@ import { sql } from "@vercel/postgres";
 import { Station } from './(types)/station';
 import MapBoxMap from './(components)/map';
 import { FeatureCollection } from 'geojson';
-import GameWrapper from './(components)/guessing-game-wrapper';
 
 export default async function Home() {
  
