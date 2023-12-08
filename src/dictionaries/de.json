@@ -1,0 +1,40 @@
+{
+    "form": {
+        "guess": {
+            "placeholder": "Bahnhof (Eingabe zum Raten)",
+            "validation": {
+                "minLength": "Ihre Vermutung muss mindestens 2 Zeichen lang sein."
+            }
+        }
+    },
+    "toast": {
+        "alreadyGuessed": {
+            "title": "Mist!",
+            "description": "Du hast die Station {station} bereits erraten!"
+        },
+        "correctGuess": {
+            "title": "Hurra!",
+            "description": "Du hast die Station {station} erraten!"
+        },
+        "incorrectGuess": {
+            "title": "Mist!",
+            "description": "Die Station {guess} gibt es nicht!"
+        }
+    },
+    "newGame": {
+        "consoleMessage": "Neues Spiel gestartet!"
+    },
+    "lastGuessedStations": {
+        "tableCaption": "Zuletzt geratene Stationen",
+        "tableHead": {
+            "name": "Name",
+            "lines": "Linien"
+        }
+    },
+    "lineStatistics": {
+        "overallPercentage": "{percentage}% Stationen gefunden",
+        "guessed": "Erraten:",
+        "toGo": "Fehlend:",
+        "guessedPercentageByLine": "Prozente nach Linien"
+    }
+}

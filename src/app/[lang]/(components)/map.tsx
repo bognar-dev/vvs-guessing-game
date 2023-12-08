@@ -4,7 +4,7 @@ import { sql } from '@vercel/postgres';
 import React, { useRef, useState, useEffect } from 'react';
 import Map, { CircleLayer, Layer, Source } from 'react-map-gl';
 import { FeatureCollection } from 'geojson';
-import { mapConfig } from '../(data)/mapconfig';
+import { mapConfig } from '@/app/(data)/mapconfig';
 
 const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className,viewState,setViewState }:
   {

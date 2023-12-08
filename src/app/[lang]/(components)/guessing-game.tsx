@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { Station } from '../(types)/station';
+import { Station } from '@/app/(types)/station';
 import LineStatics from './line-statistics';
 import LastGuessedStations from './last-guessed-stations';
 import MapBoxMap from './map';
@@ -22,7 +22,7 @@ let opts : uFuzzy.Options = {
 
 };
 
-const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
+const StuttgartTrainGame = ({ stations,dict }: { stations: Station[],dict: any}) => {
 
 
 
@@ -59,14 +59,14 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
         if (guessIndex > -1) {
             if (guessedStations.includes(stations[guessIndex].station_id)) {
                 toast({
-                    title: "Mist!",
+                    title: dict.already_guessed.title,
                     description: `Du hast die Station ${stations[guessIndex].name} bereits erraten!`,
                 })
                 return false;
             } else {
                 setGuessedStations([...guessedStations, stations[guessIndex].station_id]);
                 toast({
-                    title: "Hurra!",
+                    title:  dict.correctGuess.title,
                     description: `Du hast die Station ${stations[guessIndex].name} erraten!`,
                 })
 
@@ -80,7 +80,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
             }
         } else {
             toast({
-                title: "Mist!",
+                title:  dict.already_guessed.title,
                 description: `Die Station ${guess} gibt es nicht!`,
             })
             return false;

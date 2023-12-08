@@ -1,0 +1,40 @@
+{
+    "form": {
+        "guess": {
+            "placeholder": "Station (Enter to guess)",
+            "validation": {
+                "minLength": "Your guess must be at least 2 characters long."
+            }
+        }
+    },
+    "toast": {
+        "alreadyGuessed": {
+            "title": "Oops!",
+            "description": "You've already guessed the station {station}!"
+        },
+        "correctGuess": {
+            "title": "Hooray!",
+            "description": "You've guessed the station {station}!"
+        },
+        "incorrectGuess": {
+            "title": "Oops!",
+            "description": "The station {guess} does not exist!"
+        }
+    },
+    "newGame": {
+        "consoleMessage": "New game started!"
+    },
+    "lastGuessedStations": {
+        "tableCaption": "Last guessed stations",
+        "tableHead": {
+            "name": "Name",
+            "lines": "Lines"
+        }
+    },
+    "lineStatistics": {
+        "overallPercentage": "{percentage}% Stations found",
+        "guessed": "Guessed:",
+        "toGo": "To go:",
+        "guessedPercentageByLine": "Guessed Percentage by Line:"
+    }
+}

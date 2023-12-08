@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { Station } from '../(types)/station';
+import { Station } from '@/app/(types)/station';
 import { colorVariants, colorVariantsText } from '@/app/(data)/colorconfig';
 import AnimatedCounter from '@/components/ui/animated-counter';
 import { Gauge } from '@/components/ui/gauge';
