@@ -11,9 +11,21 @@ import GuessBox from './guess-box';
 import { useMap } from 'react-map-gl';
 import { m } from 'framer-motion';
 import { set } from 'react-hook-form';
+import uFuzzy from '@leeoniya/ufuzzy';
+import { stat } from 'fs';
+let opts : uFuzzy.Options = {
+    unicode: true,
+    intraIns: 1,
+    intraChars: '[\w-]',
+    interChars: '.',
+    intraMode: 1,
 
+};
 
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
+
+
+
     const { toast } = useToast()
     const [viewState, setViewState] = React.useState({
         longitude: 9.181126114,
@@ -37,10 +49,13 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
 
 
     const handleGuess = (guess: string) => {
-        guess.replace(/[^\w\s]/gi, '')
-        const regex = new RegExp('^' + guess.toLowerCase().replace(/[^\w\s]/gi, '').split('').join('.?') + '.?$','i');
-        const found = stations.find((station) => regex.test(station.name.toLowerCase()));
-        const guessIndex = stations.findIndex((station) => regex.test(station.name.toLowerCase()));
+        
+
+        const guessIndex = stations.findIndex((station) => {
+            const strippedGuess = guess.replace(/[-/()\s]/g, "").toLowerCase();
+            const strippedStation = station.name.replace(/[-/()\s]/g, "").toLowerCase();
+            return strippedGuess === strippedStation;
+        });
         if (guessIndex > -1) {
             if (guessedStations.includes(stations[guessIndex].station_id)) {
                 toast({
@@ -108,7 +123,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 type: 'Feature',
                 geometry: { type: 'Point', coordinates: [station?.x_coordinate || 0, station?.y_coordinate || 0]},
                 properties: {
-                    description: station?.name,
+                    'description': station?.name,
                     }
             };
         }),
