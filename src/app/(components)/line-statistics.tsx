@@ -50,12 +50,12 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
                     <AnimatedCounter value={stations.length - guessedStations.length} />
                 </div>
             </div>
-            <h3 className='hidden lg:block'>Guessed Percentage by Line:</h3>
-            <ul className='hidden lg:flex  flex-wrap justify-items-center justify-center gap-2'>
+            <h3 className='hidden md:block'>Guessed Percentage by Line:</h3>
+            <ul className='hidden md:flex  flex-wrap justify-items-center justify-center gap-2'>
                 {lines.map((line: string) => (
 
                     <Gauge
-                        className='hidden lg:flex'
+                        className='hidden md:flex'
                         /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
                         key={line}
                         value={parseFloat(calculateGuessedPercentageByLine(line).toFixed(2))}
@@ -71,16 +71,16 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
             <Collapsible
                 open={isOpen}
                 onOpenChange={setIsOpen}
-                className=" lg:hidden"
+                className=" md:hidden"
             >
 
-                <CollapsibleTrigger className="min-w-full " asChild>
-                    <ul className=' flex lg:hidden justify-items-center justify-center gap-2'>
+                <CollapsibleTrigger className="mb-2" asChild>
+                    <ul className='flex lg:hidden'>
                         <Button variant="ghost" size="sm" className="w-4 p-0">
                             <ChevronDown className="h-4 w-4" />
                             <span className="sr-only">Toggle</span>
                         </Button>
-                        <div className='min-w-full flex lg:hidden justify-items-center justify-center gap-2'>
+                        <div className='flex md:hidden gap-2 flex-wrap'>
                         {lines.slice(0, 12).map((line: string) => (
                             <Gauge
                                 className=''
@@ -97,7 +97,8 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
                     </ul>
 
                 </CollapsibleTrigger>
-                <CollapsibleContent className="flex flex-wrap justify-items-center justify-center gap-2">
+                <CollapsibleContent className="flex flex-wrap justify-items-center justify-end gap-2">
+                
                     {lines.slice(12).map((line: string) => (
                         <Gauge
                             className=''
