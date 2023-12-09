@@ -73,7 +73,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 setViewState({
                     longitude: stations[guessIndex].x_coordinate,
                     latitude: stations[guessIndex].y_coordinate,
-                    zoom: 15
+                    zoom: 12
                   });
 
                 return true;
@@ -140,7 +140,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 </div>
                 <div className='hidden lg:block col-span-1 bg-white p-5 overflow-y-scroll'>
                     <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
-                    <LastGuessedStations className='overflow-y-scroll' stations={stations} guessedStations={guessedStations} />
+                    <LastGuessedStations className='overflow-y-visible' stations={stations} guessedStations={guessedStations} />
                 </div>
                 
             </div>

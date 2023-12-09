@@ -5,7 +5,13 @@ import { Station } from '../(types)/station';
 import { colorVariants, colorVariantsText } from '@/app/(data)/colorconfig';
 import AnimatedCounter from '@/components/ui/animated-counter';
 import { Gauge } from '@/components/ui/gauge';
-
+import { ChevronDown, Plus, X } from "lucide-react"
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import { Button } from '@/components/ui/button';
 interface LineStatisticsProps {
     stations: Station[];
     guessedStations: number[];
@@ -17,6 +23,8 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
     guessedStations,
     lines
 }) => {
+
+    const [isOpen, setIsOpen] = React.useState(false)
     const overallPercentage = (guessedStations.length / stations.length) * 100;
 
     const calculateGuessedPercentageByLine = (line: string) => {
@@ -29,9 +37,9 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
 
 
     return (
-        <div className='flex justify-items-start justify-start flex-col gap-4 '>
+        <div className='flex justify-items-center justify-center md:justify-items-start md:justify-start flex-col gap-4 '>
             <h2 className=' text-md'><span className='  font-semibold text-xl'>{overallPercentage.toFixed(2)}%</span> Stations found</h2>
-            
+
             <div className='hidden lg:flex gap-2 justify-center justify-items-center'>
                 <div className='grid grid-flow-row grid-rows-1 justify-items-center justify-center'>
                     <h2 className='font-semibold'>Guessed:</h2>
@@ -43,10 +51,11 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
                 </div>
             </div>
             <h3 className='hidden lg:block'>Guessed Percentage by Line:</h3>
-            <ul className='flex flex-wrap justify-items-center justify-center gap-2'>
+            <ul className='hidden lg:flex  flex-wrap justify-items-center justify-center gap-2'>
                 {lines.map((line: string) => (
 
                     <Gauge
+                        className='hidden lg:flex'
                         /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
                         key={line}
                         value={parseFloat(calculateGuessedPercentageByLine(line).toFixed(2))}
@@ -55,10 +64,54 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
                         colour={colorVariantsText[line]}
                         label={line}
                     />
-
-
                 ))}
+
+
             </ul>
+            <Collapsible
+                open={isOpen}
+                onOpenChange={setIsOpen}
+                className=" lg:hidden"
+            >
+
+                <CollapsibleTrigger className="min-w-full " asChild>
+                    <ul className=' flex lg:hidden justify-items-center justify-center gap-2'>
+                        <Button variant="ghost" size="sm" className="w-4 p-0">
+                            <ChevronDown className="h-4 w-4" />
+                            <span className="sr-only">Toggle</span>
+                        </Button>
+                        <div className='min-w-full flex lg:hidden justify-items-center justify-center gap-2'>
+                        {lines.slice(0, 12).map((line: string) => (
+                            <Gauge
+                                className=''
+                                /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
+                                key={line}
+                                value={parseFloat(calculateGuessedPercentageByLine(line).toFixed(2))}
+                                size={'tiny'}
+                                showValue={true}
+                                colour={colorVariantsText[line]}
+                                label={line}
+                            />
+                        ))}
+                        </div>
+                    </ul>
+
+                </CollapsibleTrigger>
+                <CollapsibleContent className="flex flex-wrap justify-items-center justify-center gap-2">
+                    {lines.slice(12).map((line: string) => (
+                        <Gauge
+                            className=''
+                            /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
+                            key={line}
+                            value={parseFloat(calculateGuessedPercentageByLine(line).toFixed(2))}
+                            size={'tiny'}
+                            showValue={true}
+                            colour={colorVariantsText[line]}
+                            label={line}
+                        />
+                    ))}
+                </CollapsibleContent>
+            </Collapsible>
 
         </div>
     );

@@ -15,6 +15,9 @@ const config: Config = {
       },
     },
     extend: {
+      fontSize: {
+        "2xs": ".6rem",
+      },
       colors: {
         U1: 'var(--U1)',
         U2: 'var(--U2)',
@@ -34,7 +37,7 @@ const config: Config = {
         U19: 'var(--U19)',
         U29: 'var(--U29)',
         S1: 'var(--S1)',
-        S11: 'var(--S11)',
+        S11: 'var(--S1)',
         S2: 'var(--S2)',
         S3: 'var(--S3)',
         S4: 'var(--S4)',

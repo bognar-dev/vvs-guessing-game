@@ -34,20 +34,20 @@ const GuessBox: React.FC<GuessBoxProps> = ({ handleGuess }) => {
         defaultValues: {
             guess: "",
         },
-        
-        
+
+
 
     })
 
-  /*   const onSubmit =  (values : z.infer<typeof formSchema>) => {
-        console.log(values.guess)
-        const val = form.getValues();
-        const del = handleGuess(val.guess)
-        console.log(val.guess)
-        if (del) {
-            
-        }
-    } */
+    /*   const onSubmit =  (values : z.infer<typeof formSchema>) => {
+          console.log(values.guess)
+          const val = form.getValues();
+          const del = handleGuess(val.guess)
+          console.log(val.guess)
+          if (del) {
+              
+          }
+      } */
 
     return (
 
@@ -60,10 +60,10 @@ const GuessBox: React.FC<GuessBoxProps> = ({ handleGuess }) => {
                 if (del) {
                     form.resetField("guess")
                 }
-                
+
                 e.preventDefault()
             }}
-                className="z-10 left-1/2 top-3/4 lg:top-1/4 transform -translate-x-1/2 md:-translate-y-1/2  lg:-translate-x-72 absolute rounded-full bg-white ">
+                className="z-10 left-1/2 top-1/2 lg:top-1/4 transform -translate-x-1/2 md:-translate-y-1/2  lg:-translate-x-72 absolute rounded-full bg-white ">
                 <FormField
 
                     control={form.control}

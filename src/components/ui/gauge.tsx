@@ -1,15 +1,20 @@
+import { twMerge } from "tailwind-merge";
+
 export const Gauge = ({
     value,
     size = "small",
     showValue = true,
     colour = "black-100",
-    label
+    label,
+    className
+
 }: {
     value: number;
     label?: string;
-    size: "small" | "medium" | "large";
+    size: "tiny"|"small" | "medium" | "large";
     showValue: boolean;
     colour?: string;
+    className?: string;
 }) => {
     const circumference = 332; //2 * Math.PI * 53; // 2 * pi * radius
     const valueInCircumference = (value / 100) * circumference;
@@ -18,6 +23,11 @@ export const Gauge = ({
     const strokeDashoffset = initialOffset - valueInCircumference;
 
     const sizes = {
+        tiny: {
+            width: "24",
+            height: "24",
+            textSize: "text-2xs",
+        },
         small: {
             width: "36",
             height: "36",
@@ -36,7 +46,7 @@ export const Gauge = ({
     };
 
     return (
-        <div className="flex flex-col items-center justify-center relative">
+        <div className={twMerge("flex flex-col items-center justify-center relative",className)}>
             <svg
                 fill="none"
                 shapeRendering="crispEdges"
