@@ -23,6 +23,7 @@
     "clsx": "^2.0.0",
     "framer-motion": "^10.16.12",
     "fuse.js": "^7.0.0",
+    "geojson": "^0.5.0",
     "lucide-react": "^0.294.0",
     "mapbox-gl": "^3.0.1",
     "next": "14.0.3",
@@ -35,6 +36,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/geojson": "^7946.0.13",
     "@types/mapbox-gl": "^2.7.19",
     "@types/node": "^20",
     "@types/react": "^18",
