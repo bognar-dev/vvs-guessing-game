@@ -33,6 +33,7 @@ const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className,viewState,setVie
         onMove={evt => setViewState(evt.viewState)}
         style={{ width: "100%", height: "100%" }}
         mapStyle={mapConfig.style}
+        maxBounds={mapConfig.maxBounds}
       >
         <Source id="stations" type="geojson" data={stationsGeo}>
           <Layer {...mapConfig.stationLayerStyle} />
