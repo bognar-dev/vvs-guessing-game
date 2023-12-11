@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from '@vercel/analytics/react';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export const ViewPort: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+
 }
 
 export default function RootLayout({
@@ -31,6 +33,8 @@ export default function RootLayout({
         </>
         <Toaster />
         <SpeedInsights />
+
+        <Analytics />
       </body>
 
     </html>
