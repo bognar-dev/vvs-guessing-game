@@ -6,6 +6,7 @@ import { colorVariants, colorVariantsText } from '@/app/(data)/colorconfig';
 import AnimatedCounter from '@/components/ui/animated-counter';
 import { Gauge } from '@/components/ui/gauge';
 import { ChevronDown, Plus, X } from "lucide-react"
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import {
     Collapsible,
     CollapsibleContent,
@@ -23,7 +24,7 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
     guessedStations,
     lines
 }) => {
-
+    const [parent, enableAnimations] = useAutoAnimate(/* optional config */)
     const [isOpen, setIsOpen] = React.useState(false)
     const overallPercentage = (guessedStations.length / stations.length) * 100;
 
@@ -57,7 +58,7 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
                 </div>
             </div>
             <h3 className='hidden md:block'>Guessed Percentage by Line:</h3>
-            <ul className='hidden md:flex  flex-wrap justify-items-center justify-start gap-2'>
+            <ul ref={parent} className='hidden md:flex  flex-wrap justify-items-center justify-start gap-2'>
                 {sortedLines.map((line: string) => (
 
                     <Gauge
@@ -81,7 +82,7 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
             >
 
                 <CollapsibleTrigger className="mb-2" asChild>
-                    <ul className='flex lg:hidden'>
+                    <ul ref={parent}  className='flex lg:hidden'>
                         <Button variant="ghost" size="sm" className="w-4 p-0">
                             <ChevronDown className="h-4 w-4" />
                             <span className="sr-only">Toggle</span>
@@ -104,7 +105,7 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
 
                 </CollapsibleTrigger>
                 <CollapsibleContent className="">
-                <ul className='flex lg:hidden'>
+                <ul ref={parent} className='flex lg:hidden '>
                         <Button variant="ghost" size="sm" className=" hidden w-4 p-0">
                             <ChevronDown className="h-4 w-4" />
                             <span className="sr-only">Toggle</span>
@@ -132,3 +133,4 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
 };
 
 export default LineStatistics;
+
