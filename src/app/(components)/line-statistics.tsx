@@ -34,6 +34,12 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
     };
 
 
+    const sortedLines = lines.sort((a: string, b: string) => {
+        const percentageA = calculateGuessedPercentageByLine(a);
+        const percentageB = calculateGuessedPercentageByLine(b);
+        return percentageB - percentageA;
+    });
+
 
 
     return (
@@ -51,8 +57,8 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
                 </div>
             </div>
             <h3 className='hidden md:block'>Guessed Percentage by Line:</h3>
-            <ul className='hidden md:flex  flex-wrap justify-items-center justify-center gap-2'>
-                {lines.map((line: string) => (
+            <ul className='hidden md:flex  flex-wrap justify-items-center justify-start gap-2'>
+                {sortedLines.map((line: string) => (
 
                     <Gauge
                         className='hidden md:flex'
@@ -80,8 +86,8 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
                             <ChevronDown className="h-4 w-4" />
                             <span className="sr-only">Toggle</span>
                         </Button>
-                        <div className='flex md:hidden gap-2 flex-wrap'>
-                        {lines.slice(0, 12).map((line: string) => (
+                        <div className='flex flex-wrap justify-items-center justify-start md:hidden gap-2 px-2'>
+                        {sortedLines.slice(0, 12).map((line: string) => (
                             <Gauge
                                 className=''
                                 /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
@@ -97,20 +103,27 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
                     </ul>
 
                 </CollapsibleTrigger>
-                <CollapsibleContent className="flex flex-wrap justify-items-center justify-end gap-2">
-                
-                    {lines.slice(12).map((line: string) => (
-                        <Gauge
-                            className=''
-                            /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
-                            key={line}
-                            value={parseFloat(calculateGuessedPercentageByLine(line).toFixed(2))}
-                            size={'tiny'}
-                            showValue={true}
-                            colour={colorVariantsText[line]}
-                            label={line}
-                        />
-                    ))}
+                <CollapsibleContent className="">
+                <ul className='flex lg:hidden'>
+                        <Button variant="ghost" size="sm" className=" hidden w-4 p-0">
+                            <ChevronDown className="h-4 w-4" />
+                            <span className="sr-only">Toggle</span>
+                        </Button>
+                        <div className='flex flex-wrap justify-items-center justify-start md:hidden gap-2 pl-6'>
+                        {sortedLines.slice(12).map((line: string) => (
+                            <Gauge
+                                className=''
+                                /* className = {`border text-white font-semibold text-xs rounded-lg p-0.5 px-1 ${colorVariants[line]}`} */
+                                key={line}
+                                value={parseFloat(calculateGuessedPercentageByLine(line).toFixed(2))}
+                                size={'tiny'}
+                                showValue={true}
+                                colour={colorVariantsText[line]}
+                                label={line}
+                            />
+                        ))}
+                        </div>
+                    </ul>
                 </CollapsibleContent>
             </Collapsible>
 

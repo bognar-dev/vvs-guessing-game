@@ -12,10 +12,10 @@ export const mapConfig = {
         id: 'StationPoint',
         type: 'circle',
         paint: {
-            'circle-radius': 4,
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 2.2, 15, 4],
             'circle-color': '#ffffff',
             'circle-stroke-color': '#878787',
-            'circle-stroke-width': 2,
+            'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 10, 1, 15, 2],
             'circle-pitch-scale': 'map',
             'circle-pitch-alignment': 'map',
             
@@ -26,10 +26,10 @@ export const mapConfig = {
         type: 'circle',
     
         paint: {
-            'circle-radius': 4,
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 2.2, 15, 4],
             'circle-color': '#000000',
             'circle-stroke-color': '#ffffff',
-            'circle-stroke-width': 2,
+            'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 10, 1, 15, 2],
             'circle-pitch-scale': 'map',
             'circle-pitch-alignment': 'map',
             
