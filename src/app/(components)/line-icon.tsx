@@ -2,7 +2,7 @@ import React from 'react';
 
 interface LineIconProps {
   line: string;
-  key?: number;
+  key: number;
 }
 
 const LineIcon: React.FC<LineIconProps> = ({ line, key }) => {

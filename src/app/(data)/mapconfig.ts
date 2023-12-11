@@ -16,8 +16,9 @@ export const mapConfig = {
             'circle-color': '#ffffff',
             'circle-stroke-color': '#878787',
             'circle-stroke-width': 2,
-            'circle-pitch-scale': 'viewport',
-            'circle-pitch-alignment': 'viewport',
+            'circle-pitch-scale': 'map',
+            'circle-pitch-alignment': 'map',
+            
         }
     } as CircleLayer,
     guessedStationLayerStyle: {
@@ -29,8 +30,8 @@ export const mapConfig = {
             'circle-color': '#000000',
             'circle-stroke-color': '#ffffff',
             'circle-stroke-width': 2,
-            'circle-pitch-scale': 'viewport',
-            'circle-pitch-alignment': 'viewport',
+            'circle-pitch-scale': 'map',
+            'circle-pitch-alignment': 'map',
             
         }
     } as CircleLayer,

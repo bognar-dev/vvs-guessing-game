@@ -8,7 +8,7 @@ import { FeatureCollection } from 'geojson';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import GuessBox from './guess-box';
-import { useMap } from 'react-map-gl';
+import { MapProvider, useMap } from 'react-map-gl';
 import { m } from 'framer-motion';
 import { set } from 'react-hook-form';
 import uFuzzy from '@leeoniya/ufuzzy';
@@ -23,7 +23,7 @@ let opts : uFuzzy.Options = {
 };
 
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
-
+    const {map} = useMap();
 
 
     const { toast } = useToast()
@@ -70,10 +70,16 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                     description: `Du hast die Station ${stations[guessIndex].name} erraten!`,
                 })
 
-                setViewState({
+               /*  setViewState({
                     longitude: stations[guessIndex].x_coordinate,
                     latitude: stations[guessIndex].y_coordinate,
                     zoom: 12
+                  }); */
+                  console.log(map)
+                  map?.flyTo({
+                    center: [stations[guessIndex].x_coordinate, stations[guessIndex].y_coordinate],
+                    zoom: 12,
+                    essential: true // this animation is considered essential with respect to prefers-reduced-motion
                   });
 
                 return true;
@@ -129,7 +135,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
         }),
     };
     return (
-        <>
+        <MapProvider>
             <div className="grid grid-cols-4 h-screen  overflow-hidden">
                 <div className='col-span-4 lg:col-span-3'>
                     <GuessBox handleGuess={handleGuess} />
@@ -146,7 +152,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
             </div>
 
 
-        </>
+        </MapProvider>
     );
 };
 

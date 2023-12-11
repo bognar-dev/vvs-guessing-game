@@ -6,7 +6,7 @@ import Map, { CircleLayer, Layer, Source } from 'react-map-gl';
 import { FeatureCollection } from 'geojson';
 import { mapConfig } from '../(data)/mapconfig';
 
-const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className,viewState,setViewState }:
+const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className, viewState, setViewState }:
   {
     stationsGeo: FeatureCollection,
     guessedStationsGeo: FeatureCollection,
@@ -21,13 +21,14 @@ const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className,viewState,setVie
       latitude: number,
       zoom: number
     }>>
-        }) => {
+  }) => {
 
 
 
   return (
     <div className={className}>
       <Map
+        id='map'
         mapboxAccessToken={mapConfig.accessKey}
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}

@@ -17,7 +17,7 @@ const stations: Station[] = rows as Station[];
 
   return (
     <main className="">
-        
+      
       <GuessingGame stations={stations}/>
       
     </main>
