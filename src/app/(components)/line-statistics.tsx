@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Station } from '../(types)/station';
 import { colorVariants, colorVariantsText } from '@/app/(data)/colorconfig';

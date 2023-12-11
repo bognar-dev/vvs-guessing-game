@@ -88,6 +88,8 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
             toast({
                 title: "Mist!",
                 description: `Die Station ${guess} gibt es nicht!`,
+                variant: "destructive",
+                duration: 1250,
             })
             return false;
         }
