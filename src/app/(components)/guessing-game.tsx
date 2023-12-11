@@ -61,6 +61,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 toast({
                     title: "Mist!",
                     description: `Du hast die Station ${stations[guessIndex].name} bereits erraten!`,
+                    duration: 1250,
                 })
                 return false;
             } else {
@@ -68,6 +69,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 toast({
                     title: "Hurra!",
                     description: `Du hast die Station ${stations[guessIndex].name} erraten!`,
+                    duration: 1250,
                 })
 
                /*  setViewState({
@@ -78,7 +80,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                   console.log(map)
                   map?.flyTo({
                     center: [stations[guessIndex].x_coordinate, stations[guessIndex].y_coordinate],
-                    zoom: 12,
+                    zoom: 13.2,
                     essential: true // this animation is considered essential with respect to prefers-reduced-motion
                   });
 
@@ -137,7 +139,6 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
         }),
     };
     return (
-        <MapProvider>
             <div className="grid grid-cols-4 h-screen  overflow-hidden">
                 <div className='col-span-4 lg:col-span-3'>
                     <GuessBox handleGuess={handleGuess} />
@@ -152,9 +153,6 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 </div>
                 
             </div>
-
-
-        </MapProvider>
     );
 };
 
