@@ -43,19 +43,18 @@ const LineStatistics: React.FC<LineStatisticsProps> = ({
 
     return (
         <div className='flex justify-items-center justify-center md:justify-items-start md:justify-start flex-col gap-4 '>
-            <h2 className=' text-md'><span className='  font-semibold text-xl'>{overallPercentage.toFixed(2)}%</span> Stations found</h2>
+            <h2 className=' text-md'><span className='  font-semibold text-xl'>{overallPercentage.toFixed(2)}%</span> Stationen erraten</h2>
 
             <div className='hidden lg:flex gap-2 justify-center justify-items-center'>
                 <div className='grid grid-flow-row grid-rows-1 justify-items-center justify-center'>
-                    <h2 className='font-semibold'>Guessed:</h2>
+                    <h2 className='font-semibold'>Erraten:</h2>
                     <AnimatedCounter value={guessedStations.length} />
                 </div>
                 <div className='grid grid-flow-row grid-rows-1 justify-items-center justify-center'>
-                    <h2 className='font-semibold'>To go:</h2>
+                    <h2 className='font-semibold'>Noch zu erraten:</h2>
                     <AnimatedCounter value={stations.length - guessedStations.length} />
                 </div>
             </div>
-            <h3 className='hidden md:block'>Guessed Percentage by Line:</h3>
             <ul ref={parent} className='hidden md:flex  flex-wrap justify-items-center justify-start gap-2'>
                 {sortedLines.map((line: string) => (
 
