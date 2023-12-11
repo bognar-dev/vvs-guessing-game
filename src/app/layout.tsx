@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ export default function RootLayout({
           {children}
         </>
         <Toaster />
-
+        <SpeedInsights />
       </body>
 
     </html>
