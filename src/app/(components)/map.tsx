@@ -22,9 +22,6 @@ const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className, viewState, setV
       zoom: number
     }>>
   }) => {
-
-
-console.log(viewState.zoom)
   return (
     <div className={className}>
       <Map
