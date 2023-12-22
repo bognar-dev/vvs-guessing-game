@@ -5,6 +5,7 @@ import LineStatics from './line-statistics';
 import LastGuessedStations from './last-guessed-stations';
 import MapBoxMap from './map';
 import { FeatureCollection } from 'geojson';
+import levenshtein from 'fast-levenshtein';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import GuessBox from './guess-box';
@@ -13,7 +14,7 @@ import { m } from 'framer-motion';
 import { set } from 'react-hook-form';
 import uFuzzy from '@leeoniya/ufuzzy';
 import { stat } from 'fs';
-let opts : uFuzzy.Options = {
+let opts: uFuzzy.Options = {
     unicode: true,
     intraIns: 1,
     intraChars: '[\w-]',
@@ -23,7 +24,7 @@ let opts : uFuzzy.Options = {
 };
 
 const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
-    const {map} = useMap();
+    const { map } = useMap();
 
 
     const { toast } = useToast()
@@ -31,7 +32,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
         longitude: 9.181126114,
         latitude: 48.78316027,
         zoom: 12
-      });
+    });
     const [guessedStations, setGuessedStations] = useState<number[]>([]);
 
     useEffect(() => {
@@ -49,19 +50,20 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
 
 
     const handleGuess = (guess: string) => {
-        
+    
 
         const guessIndex = stations.findIndex((station) => {
             const strippedGuess = guess.replace(/[-/()\s]/g, "").toLowerCase();
             const strippedStation = station.name.replace(/[-/()\s]/g, "").toLowerCase();
-            return strippedGuess === strippedStation;
+            const distance = levenshtein.get(strippedGuess, strippedStation);
+            return distance <= strippedStation.length * 0.2;
         });
         if (guessIndex > -1) {
             if (guessedStations.includes(stations[guessIndex].station_id)) {
                 toast({
                     title: "Mist!",
                     description: `Du hast die Station ${stations[guessIndex].name} bereits erraten!`,
-                    duration: 1250,
+                    duration: 3000,
                 })
                 return false;
             } else {
@@ -69,20 +71,20 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 toast({
                     title: "Hurra!",
                     description: `Du hast die Station ${stations[guessIndex].name} erraten!`,
-                    duration: 1250,
+                    duration: 3000,
                 })
 
-               /*  setViewState({
-                    longitude: stations[guessIndex].x_coordinate,
-                    latitude: stations[guessIndex].y_coordinate,
-                    zoom: 12
-                  }); */
-                  console.log(map)
-                  map?.flyTo({
+                /*  setViewState({
+                     longitude: stations[guessIndex].x_coordinate,
+                     latitude: stations[guessIndex].y_coordinate,
+                     zoom: 12
+                   }); */
+              
+                map?.flyTo({
                     center: [stations[guessIndex].x_coordinate, stations[guessIndex].y_coordinate],
                     zoom: 13.2,
                     essential: true // this animation is considered essential with respect to prefers-reduced-motion
-                  });
+                });
 
                 return true;
             }
@@ -91,16 +93,10 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 title: "Mist!",
                 description: `Die Station ${guess} gibt es nicht!`,
                 variant: "destructive",
-                duration: 1250,
+                duration: 3000,
             })
             return false;
         }
-    };
-
-    const startNewGame = () => {
-        setGuessedStations([]);
-        localStorage.removeItem('guessedStations');
-        console.log('new game')
     };
 
     // Create a list of all lines that exist in the stations array
@@ -119,7 +115,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 type: 'Feature',
                 geometry: { type: 'Point', coordinates: [station.x_coordinate, station.y_coordinate] },
                 properties: {
-                    }
+                }
             })),
 
     };
@@ -131,28 +127,28 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
 
             return {
                 type: 'Feature',
-                geometry: { type: 'Point', coordinates: [station?.x_coordinate || 0, station?.y_coordinate || 0]},
+                geometry: { type: 'Point', coordinates: [station?.x_coordinate || 0, station?.y_coordinate || 0] },
                 properties: {
                     'Station Name': station?.name,
-                    }
+                }
             };
         }),
     };
     return (
-            <div className="grid grid-cols-4 h-screen  overflow-hidden">
-                <div className='col-span-4 lg:col-span-3'>
-                    <GuessBox handleGuess={handleGuess} />
-                    <MapBoxMap className='h-full ' stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} viewState={viewState} setViewState={setViewState}  />
-                </div>
-                <div className='lg:hidden z-10 px-5 py-2 mx-5 top-4  absolute rounded-md bg-white '>
-                    <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
-                </div>
-                <div className='hidden lg:block col-span-1 bg-white p-5 overflow-y-scroll'>
-                    <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
-                    <LastGuessedStations className='overflow-y-visible' stations={stations} guessedStations={guessedStations} />
-                </div>
-                
+        <div className="grid grid-cols-4 h-screen  overflow-hidden">
+            <div className='col-span-4 lg:col-span-3'>
+                <GuessBox handleGuess={handleGuess} />
+                <MapBoxMap className='h-full ' stationsGeo={stationsGeoJson} guessedStationsGeo={guessedStationsGeo} viewState={viewState} setViewState={setViewState} />
             </div>
+            <div className='lg:hidden z-10 px-5 py-2 mx-5 top-4  absolute rounded-md bg-white '>
+                <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
+            </div>
+            <div className='hidden lg:block col-span-1 bg-white p-5 overflow-y-scroll'>
+                <LineStatics stations={stations} guessedStations={guessedStations} lines={allLines} />
+                <LastGuessedStations className='overflow-y-visible' stations={stations} guessedStations={guessedStations} />
+            </div>
+
+        </div>
     );
 };
 
