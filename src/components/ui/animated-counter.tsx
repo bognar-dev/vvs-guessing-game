@@ -1,15 +1,16 @@
 import { MotionValue, motion, useSpring, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 const fontSize = 30;
 const padding = 15;
 const height = fontSize + padding;
 
-export default function AnimatedCounter({ value }: { value: number }) {
+export default function AnimatedCounter({ value,className }: { value: number ,className?:string}) {
   return (
     <div
       style={{ fontSize }}
-      className="flex space-x-3 overflow-hidden rounded w-min bg-slate-200 px-2 leading-none text-gray-900"
+      className={twMerge("flex space-x-3 overflow-hidden rounded w-min bg-slate-200 px-2 leading-none text-gray-900",className)}
     >
       <Digit place={100} value={value} />
       <Digit place={10} value={value} />
