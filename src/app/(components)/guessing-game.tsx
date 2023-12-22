@@ -133,7 +133,7 @@ const StuttgartTrainGame = ({ stations }: { stations: Station[] }) => {
                 type: 'Feature',
                 geometry: { type: 'Point', coordinates: [station?.x_coordinate || 0, station?.y_coordinate || 0]},
                 properties: {
-                    'description': station?.name,
+                    'Station Name': station?.name,
                     }
             };
         }),

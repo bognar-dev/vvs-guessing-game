@@ -2,7 +2,7 @@
 
 import { sql } from '@vercel/postgres';
 import React, { useRef, useState, useEffect } from 'react';
-import Map, { CircleLayer, Layer, Source } from 'react-map-gl';
+import Map, { CircleLayer, Layer, Marker, Source } from 'react-map-gl';
 import { FeatureCollection } from 'geojson';
 import { mapConfig } from '../(data)/mapconfig';
 
@@ -24,7 +24,7 @@ const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className, viewState, setV
   }) => {
 
 
-
+console.log(viewState.zoom)
   return (
     <div className={className}>
       <Map
@@ -42,6 +42,9 @@ const MapBoxMap = ({ stationsGeo, guessedStationsGeo, className, viewState, setV
         <Source id="guessedStations" type="geojson" data={guessedStationsGeo} >
           <Layer {...mapConfig.guessedStationLayerStyle} />
         </Source>
+        <Source id="guessedStationsName" type="geojson" data={guessedStationsGeo} >
+          <Layer {...mapConfig.guessedStationNameLayerStyle} />
+          </Source>
       </Map>
     </div>
   );
