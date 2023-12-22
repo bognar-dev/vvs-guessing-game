@@ -23,7 +23,7 @@ const LastGuessedStations: React.FC<LastGuessedStationsProps> = ({ stations, gue
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[100px]">Name</TableHead>
-                        <TableHead>Lines</TableHead>
+                        <TableHead>Linien</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
